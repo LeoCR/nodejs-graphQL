@@ -1,6 +1,7 @@
 type Query {
   product(id:ID!): Product
   products:[Product!]!
+  category(id:ID!):Category
 }
 
 type Mutation{
@@ -26,6 +27,7 @@ type Category{
   name: String!
   image:String!
   createdAt:String!
+  products:[Product]
 }
 type User {
   id: ID!
