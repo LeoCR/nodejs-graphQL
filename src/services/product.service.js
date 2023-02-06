@@ -42,9 +42,9 @@ class ProductsService {
   }
 
   async findOne(id) {
-    const product = await models.Product.findByPk(id, {
+    const product = await models.Product.findByPk(id/* , {
       include: ['category']
-    });
+    } */);
     if (!product) {
       throw boom.notFound('product not found');
     }
@@ -61,6 +61,14 @@ class ProductsService {
     const product = await this.findOne(id);
     await product.destroy();
     return { id };
+  }
+  async getByCategory(id){
+    const product = await models.Product.findAll({
+      where: {
+        id,
+      },
+    });
+    return product;
   }
 
 }

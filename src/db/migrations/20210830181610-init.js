@@ -6,7 +6,8 @@ const { CATEGORY_TABLE } = require('./../models/category.model');
 const { PRODUCT_TABLE } = require('./../models/product.model');
 const { ORDER_TABLE } = require('./../models/order.model');
 const { ORDER_PRODUCT_TABLE } = require('./../models/order-product.model');
-
+const { AVOCADO_TABLE } = require('./../models/avocado.model');
+const { ATTRIBUTE_TABLE } = require('./../models/attribute.model');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -211,7 +212,101 @@ module.exports = {
         onDelete: 'SET NULL'
       }
     });
-
+    await queryInterface.createTable(AVOCADO_TABLE, {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.DataTypes.INTEGER,
+      },
+      name: {
+        allowNull: false,
+        type: Sequelize.DataTypes.STRING,
+      },
+      image: {
+        allowNull: false,
+        type: Sequelize.DataTypes.STRING,
+      },
+      sku: {
+        allowNull: true,
+        type: Sequelize.DataTypes.STRING,
+      },
+      price: {
+        allowNull: true,
+        type: Sequelize.DataTypes.INTEGER,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        field: 'created_at',
+        defaultValue: Sequelize.NOW,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        field: 'updated_at',
+        defaultValue: Sequelize.NOW,
+      },
+      deletedAt: {
+        allowNull: true,
+        type: Sequelize.DataTypes.DATE,
+        field: 'deleted_at',
+        defaultValue: Sequelize.NOW,
+      },
+    });
+    await queryInterface.createTable(ATTRIBUTE_TABLE, {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.DataTypes.INTEGER,
+      },
+      description: {
+        type: Sequelize.DataTypes.TEXT,
+        allowNull: false,
+      },
+      shape: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+      },
+      hardiness: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+      },
+      taste: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+      },
+      avocadoId: {
+        field: 'avocado_id',
+        allowNull: false,
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: AVOCADO_TABLE,
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        field: 'created_at',
+        defaultValue: Sequelize.NOW,
+      },
+      deletedAt: {
+        allowNull: true,
+        type: Sequelize.DataTypes.DATE,
+        field: 'deleted_at',
+        defaultValue: Sequelize.NOW,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        field: 'updated_at',
+        defaultValue: Sequelize.NOW,
+      },
+    });
   },
 
   down: async (queryInterface) => {
@@ -221,5 +316,7 @@ module.exports = {
     await queryInterface.dropTable(CATEGORY_TABLE);
     await queryInterface.dropTable(CUSTOMER_TABLE);
     await queryInterface.dropTable(USER_TABLE);
+    await queryInterface.dropTable(ATTRIBUTE_TABLE);
+    await queryInterface.dropTable(AVOCADO_TABLE);
   }
 };

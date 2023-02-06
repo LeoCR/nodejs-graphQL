@@ -4,6 +4,7 @@ const {
   addProduct,
   updateProduct,
   deleteProduct,
+  getProductsByCategory
 } = require('./product.resolvers');
 const {login} = require('./auth.resolvers')
 const { addCategory, getCategory } = require('./category.resolvers');
@@ -28,5 +29,8 @@ const resolvers = {
     addCategory,
   },
   CategoryNameType,
+  Category: {
+    products: getProductsByCategory,
+  },
 };
 module.exports=resolvers
