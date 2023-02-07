@@ -27,7 +27,7 @@ const AttributeSchema = {
   },
   avocadoId: {
     field: 'avocado_id',
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
     references: {
       model: AVOCADO_TABLE,
@@ -58,7 +58,9 @@ const AttributeSchema = {
 
 class Attribute extends Model {
   static associate(models) {
-    this.belongsTo(models.Avocado);
+    this.belongsTo(models.Avocado, {
+      as: 'avocado',
+    });
   }
 
   static config(sequelize) {

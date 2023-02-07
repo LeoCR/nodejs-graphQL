@@ -16,27 +16,32 @@ const useGraphql = async(app) => {
     resolvers,
     scalarsResolvers
   ]
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers: allResolvers,
-    plugins: [
-      // Install a landing page plugin based on NODE_ENV
-      process.env.NODE_ENV === 'production'
-        ? ApolloServerPluginLandingPageProductionDefault({
-            graphRef: 'curso-node-graphql@graph-variant',
-            footer: false,
-          })
-        : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
-    ],
-  });
-  await server.start();
-  app.use(
-    '/graphql',
-    expressMiddleware(server, {
-      context: async ({ req, res }) =>
-        buildContext({ token: req.headers.token,req,res }),
-    })
-  );
+  try {
+   const server = new ApolloServer({
+     typeDefs,
+     resolvers: allResolvers,
+     plugins: [
+       // Install a landing page plugin based on NODE_ENV
+       process.env.NODE_ENV === 'production'
+         ? ApolloServerPluginLandingPageProductionDefault({
+             graphRef: 'curso-node-graphql@graph-variant',
+             footer: false,
+           })
+         : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+     ],
+   });
+   await server.start();
+   app.use(
+     '/graphql',
+     expressMiddleware(server, {
+       context: async ({ req, res }) =>
+         buildContext({ token: req.headers.token, req, res }),
+     })
+   );
+  } catch (error) {
+    console.error('An error occurs', error);
+  }
+
 };
 
 module.exports = useGraphql;
