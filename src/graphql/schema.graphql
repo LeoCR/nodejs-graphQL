@@ -3,6 +3,7 @@ type Query {
   products: [Product!]!
   category(id: ID!): Category
   avocados: [Avocado!]!
+  avocado(id:ID!): Avocado
 }
 
 type Mutation {
@@ -11,6 +12,7 @@ type Mutation {
   deleteProduct(id: ID!): ID
   login(email: String!, password: String!): AuthResponse
   addCategory(dto: CreateCategoryDto!): Category
+  addAvocado(dto: CreateAvocadoDto!): Avocado
 }
 
 type Product {
@@ -83,5 +85,16 @@ input CreateProductDto {
 input CreateCategoryDto {
   name: CategoryNameType!
   image: String!
+}
+
+input CreateAvocadoDto {
+  image: String!
+  name: String!
+  sku: String!
+  price: Float!
+  description: String
+  shape: String
+  hardiness: String
+  taste: String
 }
 scalar CategoryNameType

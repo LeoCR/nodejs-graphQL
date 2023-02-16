@@ -32,7 +32,7 @@ module.exports = {
       },
       {
         name: 'Bacon Avocado',
-        image: 'http://localhost:3001/images/bacon.jpg',
+        image: 'http://localhost:3000/images/bacon.jpg',
         sku: 'BXD100BLK',
         price: 2.5,
         created_at: new Date(),
@@ -40,7 +40,7 @@ module.exports = {
       },
       {
         name: 'Hass Avocado',
-        image: 'http://localhost:3001/images/hass.jpg',
+        image: 'http://localhost:3000/images/hass.jpg',
         sku: 'RMRCZN7E',
         price: 4.25,
         created_at: new Date(),

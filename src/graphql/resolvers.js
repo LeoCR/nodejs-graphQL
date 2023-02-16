@@ -9,7 +9,12 @@ const {
 } = require('./product.resolvers');
 const {login} = require('./auth.resolvers')
 const { addCategory, getCategory } = require('./category.resolvers');
-const { getAvos, getAttributesByID  } = require('./avos.resolvers');
+const {
+  getAvos,
+  getAvo,
+  getAttributesByID,
+  addAvocado,
+} = require('./avocado.resolvers');
 
 const CategoryNameType = new RegularExpression(
   'CategoryNameType',
@@ -22,6 +27,7 @@ const resolvers = {
     products: getProducts,
     category: getCategory,
     avocados: getAvos,
+    avocado: getAvo
   },
   Mutation: {
     addProduct,
@@ -29,6 +35,7 @@ const resolvers = {
     deleteProduct,
     login,
     addCategory,
+    addAvocado
   },
   CategoryNameType,
   Category: {

@@ -33,6 +33,13 @@ class AuthService {
       access_token
     };
   }
+  getUserId(token){
+    const userInfo = jwt.verify(token.replace('Bearer ',''), config.jwtSecret);
+    if (!userInfo){
+      return 0
+    }
+    return userInfo.sub;
+  }
 
   async sendRecovery(email) {
     const user = await service.findByEmail(email);

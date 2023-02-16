@@ -14,5 +14,20 @@ class AvocadoService {
     });
     return avocados;
   }
+  async findOne(id){
+    const avocado = await models.Avocado.findOne({
+      where: {
+        id,
+      },
+    });
+    return avocado;
+  }
+  async create(data){
+    console.log('data ######=>', data);
+    const newAvocado = await models.Avocado.create(data, {
+      include: ['attributes'],
+    });
+    return newAvocado;
+  }
 }
 module.exports = AvocadoService;

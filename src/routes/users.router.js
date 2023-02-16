@@ -1,11 +1,12 @@
 const express = require('express');
-
 const UserService = require('./../services/user.service');
 const validatorHandler = require('./../middlewares/validator.handler');
 const { updateUserDto, createUserDto, getUserDto } = require('../dtos/user.dto');
+const AuthService = require('../services/auth.service');
 
 const router = express.Router();
 const service = new UserService();
+const authService = new AuthService()
 
 router.get('/', async (req, res, next) => {
   try {
@@ -15,7 +16,19 @@ router.get('/', async (req, res, next) => {
     next(error);
   }
 });
-
+router.get(
+  '/current',
+  async (req, res, next) => {
+    try {
+      const { authorization } = req.headers;
+      const userId = authService.getUserId(authorization);
+      const user = await service.findOne(userId);
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 router.get('/:id',
   validatorHandler(getUserDto, 'params'),
   async (req, res, next) => {
