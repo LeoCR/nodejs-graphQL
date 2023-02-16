@@ -1,5 +1,5 @@
 const AvocadoService = require('../services/avocado.service');
-
+const { checkJWTGraphQL } = require('../utils/checkJWTGraphQL');
 const service = new AvocadoService();
 
 const getAvos= async () => {
@@ -16,7 +16,8 @@ const getAvo = async (_, { id }) => {
   const avo = await service.findOne(id);
   return avo;
 };
-const addAvocado = async (_, { dto }) => {
+const addAvocado = async (_, { dto }, context) => {
+  await checkJWTGraphQL(context);
   const { name, image, sku, price,description,taste,shape,hardiness } = dto;
   const avocado = await service.create({
     name,
